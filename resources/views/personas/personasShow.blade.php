@@ -17,6 +17,8 @@
 
     </ul>
     <hr>
+    Usuario creador:{{$persona->user->name}} ({{$persona->user->email}})
+    <hr>
     <a href="{{route('persona.edit',$persona)}}">Editar</a>
     <hr>
     <form action="{{route('persona.destroy',$persona)}}" method='POST'>

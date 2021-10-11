@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class PersonaController extends Controller
@@ -15,7 +16,10 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        $personas = Persona::all();
+        //$personas=Persona::where('user_id',Auth::user());
+        //$personas=Auth::user()->personas()->get();// si llamas al metodo asi puedes concatenr cosas al query
+        $personas=Auth::user()->personas;//si utilizas esta forma no le puedes concatenar wheres o asi
+        //$personas = Persona::all();
         return view('personas/personasIndex',compact('personas'));
     }
 
@@ -53,7 +57,10 @@ class PersonaController extends Controller
             //'correo' => 'required|email'
 
         ]);
-        $request->merge(['apellido_materno'=>$request->apellido_materno ?? '']);
+        $request->merge([
+            'user_id'=>Auth::id(),
+            'apellido_materno'=>$request->apellido_materno ?? ''
+        ]);
         Persona::create($request->all());
         /*
         $persona= new Persona();

@@ -12,6 +12,8 @@
     <a href={{route('persona.create')}}>Agregar persona</a>
     <table border="1">
         <thead>
+            <th>Usuario</th>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Apellido paterno</th>
             <th>Apellido materno</th>
@@ -22,6 +24,9 @@
         <tbody>
             @foreach ($personas as $persona)
                 <tr>
+                    <td>
+                        {{$persona->user->name}}
+                    </td>
                     <td>
                         <a href={{route('persona.show',$persona->id)}}>
                             {{$persona->id}}

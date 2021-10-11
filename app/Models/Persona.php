@@ -14,6 +14,10 @@ class Persona extends Model
         'apellido_materno',
         'codigo',
         'correo',
-        'telefono'
+        'telefono',
+        'user_id'
     ];
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
