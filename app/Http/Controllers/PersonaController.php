@@ -9,6 +9,12 @@ use Illuminate\Validation\Rule;
 
 class PersonaController extends Controller
 {
+    /*
+    para declarar un constructor y llamar a los middleware ahi se hace asi:
+    public function __construct(){
+        $this.middelware('auth')->except('index','show');
+    }
+    */
     /**
      * Display a listing of the resource.
      *
