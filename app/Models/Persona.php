@@ -9,6 +9,7 @@ class Persona extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'persona_id',
         'nombre',
         'apellido_paterno',
         'apellido_materno',
@@ -19,5 +20,8 @@ class Persona extends Model
     ];
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    public function areas(){
+        return $this->belongsToMany(Area::class);
     }
 }

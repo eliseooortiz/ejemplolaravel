@@ -35,6 +35,15 @@
         <label for="correo">Correo</label>
         <input type="email" name="correo" value={{$persona->correo ?? ''}}>
         <br>
+        <label for="area_id">Area:</label>
+        <select name="area_id[]" id="area_id" multiple>
+            @foreach ($areas as $area )
+                <option value="{{$area->id}}" {{array_search($area->id,$persona->areas->pluck('id')->toArray()) ===false ? '': 'selected'}} >
+                    {{$area->nombre_area}}
+                </option>
+            @endforeach
+        </select>
+        <br>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>

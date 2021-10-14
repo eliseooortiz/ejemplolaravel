@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Persona;
+use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -36,8 +37,10 @@ class PersonaController extends Controller
      */
     public function create()
     {
-        $personas = Persona::all();
-        return view('personas/personasForm',compact($personas));
+
+        $areas=Area::all();
+        return view('personas/personasForm',compact('areas'));
+        //opdemos pasar en lugar de con compact es el ->with(['areas'=>$areas]);
     }
 
     /**
@@ -67,7 +70,8 @@ class PersonaController extends Controller
             'user_id'=>Auth::id(),
             'apellido_materno'=>$request->apellido_materno ?? ''
         ]);
-        Persona::create($request->all());
+        $persona=Persona::create($request->all());
+        $persona->areas()->attach($request->area_id);
         /*
         $persona= new Persona();
         $persona->nombre = $request->nombre;
@@ -100,7 +104,10 @@ class PersonaController extends Controller
      */
     public function edit(Persona $persona)
     {
-        return view('personas/personasForm',compact('persona'));
+        $persona->load('areas');
+        //carga los datos de la instancia a esa persona
+        $areas=Area::all();
+        return view('personas/personasForm',compact('persona','areas'));
     }
 
     /**
@@ -125,7 +132,10 @@ class PersonaController extends Controller
             'correo' => 'required|email'
 
         ]);
-        Persona::where('id',$persona)->update($request->except('_token','_method'));
+
+        Persona::where('id',$persona->id)->update($request->except('_token','_method','area_id'));
+        $persona->areas()->sync($request->area_id);
+
         /*
         $persona->nombre = $request->nombre;
         $persona->apellido_paterno = $request->apellido_paterno;
