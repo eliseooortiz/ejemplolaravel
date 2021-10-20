@@ -27,6 +27,7 @@ class PersonaController extends Controller
         //$personas=Auth::user()->personas()->get();// si llamas al metodo asi puedes concatenr cosas al query
         $personas=Auth::user()->personas;//si utilizas esta forma no le puedes concatenar wheres o asi
         //$personas = Persona::all();
+        //$personas=Personas::whit('areas')->get(); //con esto podiras ahorrarte unas consultas
         return view('personas/personasIndex',compact('personas'));
     }
 

@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/inicio', function () {
+    return view('inicio');
+})->name('inicio');
 
 Route::get('/presentacion/{nombre}/{apellido?}', [PaginasController::class,'presentacion']);
 
