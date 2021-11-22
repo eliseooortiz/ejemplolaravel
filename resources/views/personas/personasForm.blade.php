@@ -13,7 +13,7 @@
         <form action={{route('persona.update',$persona)}} method="POST">
         @method('PATCH')
     @else
-        <form action={{route('persona.store')}} method="POST">
+        <form action={{route('persona.store')}} method="POST" enctype="multipart/form-data">
     @endif
         @csrf
         <br>
@@ -54,7 +54,20 @@
                 </ul>
             </div>
         @endif
+        <br>
+        <input type="file" name="archivo">
+        <br>
         <input type="submit" value="Enviar">
+        <br>
+        <a href="{{route('envia-reporte')}}">Enviar correo</a>
+        <hr>
+        <h3>
+            Archivo:
+        </h3>
+        <h5>
+            <a href="{{route('descargar-archivo',$persona)}}">{{$persona->archivo_ruta}}</a>
+
+        </h5>
     </form>
 </body>
 </html>

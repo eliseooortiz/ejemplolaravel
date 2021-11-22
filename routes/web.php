@@ -35,3 +35,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('persona', PersonaController::class)->middleware('auth');
+
+Route::get('/envioDeReporte',[PersonaController::class,'enviarReporte'])->name('envia-reporte');
+
+Route::get('/descargar-archivo/{persona}',[PersonaController::class,'descargarArchivo'])->name('descargar-archivo');

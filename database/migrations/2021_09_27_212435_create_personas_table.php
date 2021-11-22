@@ -22,7 +22,11 @@ class CreatePersonasTable extends Migration
             $table->string('codigo');
             $table->string('telefono',50)->nullable();
             $table->string('correo')->default('');
+            $table->string('archivo_original');
+            $table->string('archivo_ruta');
+            $table->string('mime',30);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

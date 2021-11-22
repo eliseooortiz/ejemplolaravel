@@ -15,6 +15,7 @@
             <th>codigo</th>
             <th>telefono</th>
             <th>Correo</th>
+            <th>Nombre completo</th>
         </thead>
         <tbody>
             @foreach ($personas as $persona)
@@ -42,6 +43,7 @@
                     <td>{{$persona->codigo}}</td>
                     <td>{{$persona->telefono}}</td>
                     <td>{{$persona->correo}}</td>
+                    <td>{{$persona->nombre_completo}}</td>
                 </tr>
             @endforeach
         </tbody>

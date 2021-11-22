@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\reporteAsistencia;
 use App\Models\Persona;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class PersonaController extends Controller
 {
@@ -67,9 +70,17 @@ class PersonaController extends Controller
             //'correo' => 'required|email'
 
         ]);
+        $ruta=$request->archivo->store('imagenes');
+        $mime=$request->archivo->getClientMimeType();
+        $nombre_original=$request->archivo->getClientOriginalName();
         $request->merge([
             'user_id'=>Auth::id(),
             'apellido_materno'=>$request->apellido_materno ?? ''
+        ]);
+        $request->merge([
+            'archivo_original'=>$nombre_original,
+            'arcivo_ruta'=>$ruta,
+            'mime'=>$mime
         ]);
         $persona=Persona::create($request->all());
         $persona->areas()->attach($request->area_id);
@@ -159,5 +170,16 @@ class PersonaController extends Controller
     {
         $persona->delete();
         return redirect()->route('persona.index');
+    }
+    /**
+     * Envia el correo del reporte
+     */
+    public function enviarReporte(){
+        mail::to('alguien@test.com')->send(new reporteAsistencia);
+        return redirect()->back();
+    }
+    public function descargarArchivo(Persona $persona){
+        $headers=['Content-Type'=>$persona->mime];
+        return Storage::download($persona->archivo_ruta,$persona->archivo_original,$headers);
     }
 }
